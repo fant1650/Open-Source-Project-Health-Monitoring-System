@@ -10,7 +10,7 @@
 
 ![image](https://github.com/user-attachments/assets/2b1969fd-ff13-4f84-8e34-388fa081618d)
 
-考虑Opendigger项目对于给定的字段已有较好的可视化playground,我们考虑将针对单一项目的健康度可视化图表嵌入聚合式可视化图表中,同时以简洁直观的折线图展示不同月份的各项核心指标,包括openrank以及participants的变化<br><br>
+考虑Opendigger项目对于给定的字段已有较好的可视化playground,我们考虑将针对单一项目的健康度可视化图表嵌入聚合式可视化图表中,<br><br>同时以简洁直观的折线图展示不同月份的各项核心指标,包括openrank以及participants的变化<br><br>
 核心部分的健康度时序预测与健康度历史数据同时生成,帮助同时理解历史健康度和未来健康走向<br><br>
 
 ## 数据来源
@@ -33,36 +33,36 @@
 <br><br>
 
 ## 健康度算法
-特征对健康度health的影响以及对应权值的确定:由于项目是否健康在开源社区并未有相关标签,我们采用经验方法分析并做初始化.<br>
-在给到的所有数据中，我们首先考虑单个项目的单种数据的变化，将最初的时间节点取0值，然后将当前时间下的数据与过往所有数据的均值做差，以得出该数据在某个时间下对于之前的数据的变化量.<br>对其进行归一化，在同一个数据中，项目各自的值去除以绝对值的最大值，计算后的值范围在-1~1之间，这样就能直观地表示这个项目的这个数据相对于其他项目的的同种数据的差距.最后在算出来的所有数据后进行加权，然后以给出的所有项目的结果进行截取然后得到健康的标准<br>
-![image](https://github.com/user-attachments/assets/512a6812-abb4-49c6-81d4-8e2cc3ee28dc)<br>
+特征对健康度health的影响以及对应权值的确定:由于项目是否健康在开源社区并未有相关标签,我们采用经验方法分析并做初始化.<br><br>
+在给到的所有数据中，我们首先考虑单个项目的单种数据的变化，将最初的时间节点取0值，然后将当前时间下的数据与过往所有数据的均值做<br><br>差，以得出该数据在某个时间下对于之前的数据的变化量.<br><br>对其进行归一化，在同一个数据中，项目各自的值去除以绝对值的最大值，计算后的值范围在-1~1之间，这样就能直观地表示这个项目的这个数<br><br>据相对于其他项目的的同种数据的差距.最后在算出来的所有数据后进行加权，然后以给出的所有项目的结果进行截取然后得到健康的标准<br><br>
+![image](https://github.com/user-attachments/assets/512a6812-abb4-49c6-81d4-8e2cc3ee28dc)<br><br>
 上图节选自项目设计方案中的数学公式
 <br><br>
 
 ## 健康度意义参照
-健康度(health)最终范围在[-1,1]之间<br>
-健康度的正负表示该项目是否健康,其中正数越靠近1表示项目近期各项指标良性发展,反映项目越健康<br>
+健康度(health)最终范围在[-1,1]之间<br><br>
+健康度的正负表示该项目是否健康,其中正数越靠近1表示项目近期各项指标良性发展,反映项目越健康,
 反之越靠近-1同理
 <br><br>
 
 ## 关于健康度时间序列数据的预测
-本项目采用SARIMAX对得到的健康度数据进行时序预测,以帮助管理者更好地理解项目健康的未来趋势<br>
-SarimaX，全称为Seasonal AutoRegressive integrated moving average with eXogenous regressors，也称为“扩展SARIMA模型”，是一种基于时间序列的预测模型。它是在经典的ARIMA模型的基础上，增加了对外部因素的考虑，可以更好地应用于实际预测中。<br>
-SARIMAX模型的主要特点是考虑了时间序列数据的季节性变化以及外部因素的影响，同时还考虑了序列的自回归、滑动平均和差分等因素。SARIMAX模型可以用来预测各种类型的时间序列数据，包括销售、股票价格、气象数据等等。<br>
-该模型的核心思想是将时间序列数据分解为趋势、季节性和随机性三个部分，并通过对这三个部分的建模来预测未来的数据走势。同时，SARIMAX模型还可以通过引入外部因素，如收入、广告、天气等，来提高模型的准确性和预测能力。<br>
-ARMAX模型最简单的方案就是把外部变量xt当成一个依赖变量,加入到ARMA的回归方程中,如下:
-![image](https://github.com/user-attachments/assets/72d8887f-7171-40cf-8b21-01db96dec665)<br>
-xt就是外部变量,β为其回归系数.这种方式看上去很直接,但是其最大的缺点是回归系数β难以解释.β的值不能解释为xt增加1,yt所增加的值.<br>
-如果使用滞后算子来改写:<br>
-![image](https://github.com/user-attachments/assets/c7d141ae-a31c-4abd-8257-0f965d86b92c)<br>
-注意到自回归系数(AR)混入了外部变量系数和误差项系数。考虑回归ARMA模型的误差，<br>
-![image](https://github.com/user-attachments/assets/9f7bed22-3f4e-4f27-8558-c4e0146b0c70)<br>
-这种形势下，回归系数就可以以其通用解释方法来解释。以滞后算子表示如下，<br>
-![image](https://github.com/user-attachments/assets/84e68243-8d35-44b9-adee-a1ac28465168)<br>
-Box和Jenkis带来一个使用转换函数的泛化模型，<br>
-![image](https://github.com/user-attachments/assets/5d61277c-921a-405b-b415-bbbd10d2c6c6)<br>
+本项目采用SARIMAX对得到的健康度数据进行时序预测,以帮助管理者更好地理解项目健康的未来趋势<br><br>
+SARIMAX，全称为Seasonal AutoRegressive integrated moving average with eXogenous regressors，也称为“扩展SARIMA模型”，是一种基于时间<br><br>序列的预测模型。它是在经典的ARIMA模型的基础上，增加了对外部因素的考虑，可以更好地应用于实际预测中。<br><br>
+SARIMAX模型的主要特点是考虑了时间序列数据的季节性变化以及外部因素的影响，同时还考虑了序列的自回归、滑动平均和差分等因素。<br><br>SARIMAX模型可以用来预测各种类型的时间序列数据，包括销售、股票价格、气象数据等等。<br><br>
+该模型的核心思想是将时间序列数据分解为趋势、季节性和随机性三个部分，并通过对这三个部分的建模来预测未来的数据走势。同时，<br><br>SARIMAX模型还可以通过引入外部因素，如收入、广告、天气等，来提高模型的准确性和预测能力。<br><br>
+ARMAX模型最简单的方案就是把外部变量xt当成一个依赖变量,加入到ARMA的回归方程中,如下:<br><br>
+![image](https://github.com/user-attachments/assets/72d8887f-7171-40cf-8b21-01db96dec665)<br><br>
+xt就是外部变量,β为其回归系数.这种方式看上去很直接,但是其最大的缺点是回归系数β难以解释.β的值不能解释为xt增加1,yt所增加的值.<br><br>
+如果使用滞后算子来改写:<br><br>
+![image](https://github.com/user-attachments/assets/c7d141ae-a31c-4abd-8257-0f965d86b92c)<br><br>
+注意到自回归系数(AR)混入了外部变量系数和误差项系数。考虑回归ARMA模型的误差，<br><br>
+![image](https://github.com/user-attachments/assets/9f7bed22-3f4e-4f27-8558-c4e0146b0c70)<br><br>
+这种形势下，回归系数就可以以其通用解释方法来解释。以滞后算子表示如下，<br><br>
+![image](https://github.com/user-attachments/assets/84e68243-8d35-44b9-adee-a1ac28465168)<br><br>
+Box和Jenkis带来一个使用转换函数的泛化模型，<br><br>
+![image](https://github.com/user-attachments/assets/5d61277c-921a-405b-b415-bbbd10d2c6c6)<br><br>
 这种形式允许外部变量或称为协变量的作用到（通过β ( L ),或者使协变量的衰减效果很大(通过V ( L ))
-模型方程如下：<br>
+模型方程如下：<br><br>
 ![image](https://github.com/user-attachments/assets/d0750e3e-b00c-48e9-8ffc-4bc0aecad4cb)<br>
 ![image](https://github.com/user-attachments/assets/1f261ab1-2534-405c-b6ff-55688bb5f626)
 <br><br>
