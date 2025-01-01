@@ -1,0 +1,197 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>健康度监测</title>
+<script type="text/javascript" src="./js/jquery.js"></script>
+<link rel="stylesheet" href="./css/comon0.css">
+<link rel="stylesheet" href="./css/stylesheet.css">
+</head>
+<body>
+<div class="loading">
+  <div class="loadbox youshe"> <img src="./css/loading-1.gif"> 页面加载中... </div>
+</div>
+
+<div class="head">
+  <h1 class="youshe">health-monitor</h1>
+  <div class="time" id="showTime">2019/12/05 16:16:54</div>
+  <script>
+  var t = null;
+    t = setTimeout(time,1000);//開始运行
+    function time()
+    {
+       clearTimeout(t);//清除定时器
+       dt = new Date();
+		var y=dt.getFullYear();
+		var mt=dt.getMonth()+1;
+		var day=dt.getDate();
+       var h=dt.getHours();//获取时
+       var m=dt.getMinutes();//获取分
+       var s=dt.getSeconds();//获取秒
+		var t = null;
+       document.getElementById("showTime").innerHTML = y+"/"+Appendzero(mt)+"/"+Appendzero(day)+" "+Appendzero(h)+":"+Appendzero(m)+":"+Appendzero(s)+"";
+        function Appendzero(obj){
+			if(obj<10) return "0" +""+ obj;
+			else return obj;
+		 }
+		t = setTimeout(time,1000); //设定定时器，循环运行     
+    }
+  </script>
+</div>
+
+
+
+
+<div class="mainbox">
+  <ul class="clearfix">
+
+
+
+    <li>
+      <!-- <div class="boxall" style="height: calc(58% - .15rem)">
+        <div class="alltitle">开源项目收藏量排行</div>
+        <div class=" boxnav " id="echarts4"></div>
+      </div> -->
+      <div class="boxall" style="height: calc(50% - .15rem)">
+        <div class="alltitle youshe" style="font-size: 20px;">选择项目</div><br><br>
+        <div class="abox">
+          <span class="youshe" style="font-size: 25px;">当前项目:</span>&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;
+          <span style="font-size: 25px;" id="project" class="youshe"></span>
+        </div>
+        <form class="search-form youshe" method="POST" id="myForm">
+          <label for="projectName" class="youshe">项目名称</label>
+          <input type="text" id="projectName" name="inputText" placeholder="请输入项目名称" class="youshe">
+          <button type="submit" class="youshe" id="updateButton">搜索</button>
+        </form>
+      </div>
+
+      <!-- echarts3 -->
+      <div class="boxall youshe" style="height: calc(50% - .15rem)">
+        <div class="alltitle youshe" style="font-size: 20px;">participants</div>
+        <div class="boxnav" id="echarts3"></div>
+      </div>
+    </li>
+
+
+
+    <li>
+      <div class="boxall" style="height: calc(20% - .15rem)">
+        <ul class="row h100 clearfix">
+          <li class="col-6">
+            <div class="sqzs h100">
+              <p class="youshe" style="font-size: 20px;">项目收藏数</p>
+              <h1 class="youshe"><span style="color: rgb(255, 156, 64);" id="star"></span></h1>
+            </div>
+		      </li>
+          <li class="col-6">
+            <div class="sqzs h100">
+              <p class="youshe" style="font-size: 20px;">当前健康度</p>
+              <h1><span style="color: pink;" id="health"></span></h1>
+            </div>
+		      </li>
+          <!-- <li class="col-6">
+            <ul class="row h100 clearfix">
+              <li class="col-4">
+                <div class="tit01">参与者人数</div>
+                <div class="piebox" id="pe01"></div>
+              </li>
+              <li class="col-4">
+                <div class="tit01">openrank</div>
+                <div class="piebox" id="pe02"></div>
+              </li>
+              <li class="col-4">
+                <div class="tit01">标题名称5</div>
+                <div class="piebox" id="pe03"></div>
+              </li>
+            </ul>
+          </li> -->
+        </ul>
+      </div>
+
+      <!-- echarts1 -->
+      <div class="boxall" style="height: calc(38% - .15rem)">
+        <div class="alltitle youshe" style="font-size: 20px;">历史数据健康度分析</div>
+        <div class="boxnav" id="echarts1"></div>
+      </div>
+
+      <!-- echarts2 -->
+      <div class="boxall" style="height: calc(42% - .15rem)">
+        <div class="alltitle youshe" style="font-size: 20px;">SARIMAX健康度预测</div>
+        <div class="boxnav" id="echarts2"></div>
+      </div>
+    </li>
+    
+
+
+    <li>  
+      <!-- echarts5 -->
+		  <div class="boxall" style="height: calc(33.333% - .15rem)">
+			  <div class="alltitle youshe" style="font-size: 20px;">openrank</div>
+			  <div class="boxnav" id="echarts5"></div>
+      </div>
+
+      <!-- <div class="boxall" style="height: calc(33.333% - .15rem)">
+        <div class="alltitle">标题名称9</div>
+		    <div class="boxnav" id="">
+          <table border="0" cellspacing="0">
+            <tr>
+              <th></th>
+              <th>字段</th>
+              <th>字段</th>
+              <th>字段</th>
+              <th>字段</th>
+
+            </tr>
+            <tr>
+              <th>字段</th>
+              <td>8098</td>
+              <td>19.80%</td>
+              <td>22</td>
+              <td>368</td>
+            </tr>
+            <tr>
+              <th>字段</th>
+              <td>7506</td>
+              <td>6.70%</td>
+              <td>22</td>
+              <td>339</td>
+            </tr>
+            <tr>				
+              <th>字段</th>
+              <td>3261</td>
+              <td>32.30%</td>
+              <td>10</td>
+              <td>325.7</td>
+            </tr>
+            <tr>
+              <th>字段</th>
+              <td>1993</td>
+              <td>	201%</td>
+              <td>10</td>
+              <td>	199</td>
+            </tr>
+          </table>
+        </div>
+      </div> -->
+
+	    <!-- <div class="boxall" style="height: calc(33.333% - .15rem)">
+        <div class="alltitle">标题名称</div>
+		    <div class="boxnav" id="echarts6" style="height:calc(100% - .3rem);"></div>
+      </div> -->
+
+      <!-- echarts4 -->
+      <div class="boxall" style="height: calc(58% - .15rem)">
+        <div class="alltitle youshe" style="font-size: 20px;">开源项目收藏量排行</div>
+        <div class=" boxnav " id="echarts4"></div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<script type="text/javascript" src="./js/echarts.min.js"></script> 
+<script language="JavaScript" src="./js/js.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+</script>
+</body>
+</html>
