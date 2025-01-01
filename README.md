@@ -102,8 +102,7 @@ npm run serve
 ```
 
 ### 后端服务器部署
-对于后端服务器(即health_monitor目录下的project项目),本项目使用的conda环境配置文件已上传在项目根目录下<br>
-可以通过
+对于后端服务器(即health_monitor目录下的project项目),本项目使用的conda环境配置文件已上传在项目根目录下可以通过<br>
 ```
 conda env create -f myenv.yaml
 ```
